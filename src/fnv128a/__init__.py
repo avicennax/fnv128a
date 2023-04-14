@@ -1,11 +1,11 @@
 from typing import Tuple
 
 # Based on https://cs.opensource.google/go/go/+/refs/tags/go1.20.3:src/hash/fnv/fnv.go;l=30
-OFFSET_LOWER = 0x62b821756295c58d # 7113472399480571277
-OFFSET_HIGHER =  0x6c62272e07bb0142 # 7809847782465536322
+OFFSET_LOWER = 0x62b821756295c58d  # 7113472399480571277
+OFFSET_HIGHER = 0x6c62272e07bb0142  # 7809847782465536322
 PRIMER_LOWER = 0x13b
 PRIME_SHIFT = 24
- 
+
 MASK32 = (1 << 32) - 1
 MASK64 = (1 << 64) - 1
 
@@ -70,7 +70,7 @@ def compute_fnv128a(data: bytes) -> bytes:
 
     # sum128a.Write
     for bs in data:
-        s[1] = (s[1]^bs) & MASK64
+        s[1] = (s[1] ^ bs) & MASK64
         s0, s1 = mul64(PRIMER_LOWER, s[1])
         s0 += ((s[1] << PRIME_SHIFT) + PRIMER_LOWER * s[0]) & MASK64
         s[1], s[0] = s1, s0
