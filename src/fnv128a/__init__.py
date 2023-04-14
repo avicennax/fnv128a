@@ -30,7 +30,7 @@ def mul64(x: int, y: int) -> Tuple[int, int]:
         return
     }
     ```
-    We aggressively mask any expansive operations to replicate Go uint64 overflow behavior.
+    We aggressively mask any expansive operations to replicate Go uint64 overflow / wrap behavior.
     """
     x0 = x & MASK32
     x1 = x >> 32
@@ -64,7 +64,7 @@ def compute_fnv128a(data: bytes) -> bytes:
         return len(data), nil
     }
     ```
-    Likewise, we aggressively mask any expansive operations to replicate Go uint64 overflow behavior.
+    Likewise, we aggressively mask any expansive operations to replicate Go uint64 overflow / wrap behavior.
     """
     s = [OFFSET_HIGHER, OFFSET_LOWER]
 
@@ -79,13 +79,8 @@ def compute_fnv128a(data: bytes) -> bytes:
     byte_array = []
     for bound in s:
         for shift in [56, 48, 40, 32, 24, 16, 8, 0]:
-            # Golang uint64 -> byte overflows
+            # Golang uint64 -> byte wraps
             byte = (bound >> shift) % 256
             byte_array.append(byte)
 
     return bytes(byte_array)
-
-
-bytes_array = compute_fnv128a(b'itemsFeatures')
-target =  b"\xeeb\xab\xb2\xe0S\xbd\xdd\xc8\t\xfba\xd6\xf7\xdah"
-assert bytes_array == target
