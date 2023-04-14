@@ -10,7 +10,7 @@ MASK32 = (1 << 32) - 1
 MASK64 = (1 << 64) - 1
 
 
-def mul64(x: int, y: int) -> Tuple[int, int]:
+def _mul64(x: int, y: int) -> Tuple[int, int]:
     """
     Based on https://pkg.go.dev/math/bits#Mul64 implementation below:
     ```
@@ -71,7 +71,7 @@ def compute_fnv128a(data: bytes) -> bytes:
     # sum128a.Write
     for bs in data:
         s[1] = (s[1] ^ bs) & MASK64
-        s0, s1 = mul64(PRIMER_LOWER, s[1])
+        s0, s1 = _mul64(PRIMER_LOWER, s[1])
         s0 += ((s[1] << PRIME_SHIFT) + PRIMER_LOWER * s[0]) & MASK64
         s[1], s[0] = s1, s0
 

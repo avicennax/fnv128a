@@ -15,7 +15,7 @@ description = "Python implementation of Golang's fnv128a in hash/fnv"
 name = "fnv128a"
 readme = "README.md"
 requires-python = ">=3.5"
-version = "0.0.1"
+version = "0.0.2"
 
 [project.urls]
 "Bug Tracker" = "https://github.com/avicennax/fnv128a/issues"
